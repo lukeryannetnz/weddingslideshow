@@ -60,6 +60,11 @@ function ShowSearchBox()
   $("#search").removeClass("hidden");
 }
 
+function HideSearchBox()
+{
+  $("#search").addClass("hidden");
+}
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -102,6 +107,8 @@ function FullscreenImage()
     left: 0,
     right: 0
   });
+
+  HideSearchBox();
 }
 
 $(document).ready(function(){
