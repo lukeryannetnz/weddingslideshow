@@ -21,7 +21,7 @@ function TryGetAccessToken()
   if(location.hash)
   {
     token = location.hash.split('=')[1];
-    console.log('access token: '.concat(accessToken));
+    console.log('access token: '.concat(token));
     location.hash = '';
   }
 
