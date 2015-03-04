@@ -14,19 +14,20 @@ function LoadImages(imageData)
 {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
-  console.log(searchuri);
+
   $.getJSON(searchuri,
   { count : "10", minTagId : imageData.data.minTagId},
     function(response){
-      console.log(response);
       for(var i = 0; i < response.data.length; i++){
         if(response.data[i].images.standard_resolution.url)
         {
           imageData.data.minTagId = response.data[i].id
-          imageData.data.imageUris.push(response.data[i].images.standard_resolution.url)
+          if(!$.inArray(response.data[i].images.standard_resolution.url, imageData.data.imageUris))
+          {
+            imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
+          }
         }
       }
-      console.log(imageData);
   })
 }
 
