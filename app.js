@@ -4,8 +4,11 @@ var accessToken;
 function ImageData(imageUris, minTagId)
 {
   this.imageUris = imageUris;
-  this.maxTagId = minTagId;
+  this.minTagId = minTagId;
 }
+
+//dirty global scope for now
+var imageData = new ImageData([], 0);
 
 function LoadImages(imageData)
 {
@@ -17,10 +20,10 @@ function LoadImages(imageData)
     function(response){
       console.log(response);
       for(var i = 0; i < response.data.length; i++){
-        if(response.data[i].images.standard_resolution.url)
+        if(response[i].images.standard_resolution.url)
         {
-          imageData.data.minTagId = response.data[i].id
-          imageData.data.imageUris.push(response.data[i].images.standard_resolution.url)
+          imageData.minTagId = response.data[i].id
+          imageData.imageUris.push(response.data[i].images.standard_resolution.url)
           $("#photo").attr("src",response.data[i].images.standard_resolution.url)
         }
       }
@@ -70,5 +73,5 @@ $(document).ready(function(){
     ShowSearchBox();
   }
 
-  $("#go").click(new ImageData([], 0), LoadImages);
+  $("#go").click(imageData, LoadImages);
 })
