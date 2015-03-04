@@ -13,14 +13,14 @@ function LoadImages(imageData)
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
   console.log(searchuri);
   $.getJSON(searchuri,
-    { count : "10", maxtagid : imageData.minTagId},
+  { count : "10", maxtagid : imageData.data.minTagId},
     function(response){
       console.log(response);
       for(var i = 0; i < response.data.length; i++){
         if(response.data[i].images.standard_resolution.url)
         {
-          imageData.minTagId = response.data[i].id
-          imageData.imageUris.push(response.data[i].images.standard_resolution.url)
+          imageData.data.minTagId = response.data[i].id
+          imageData.data.imageUris.push(response.data[i].images.standard_resolution.url)
           $("#photo").attr("src",response.data[i].images.standard_resolution.url)
         }
       }
