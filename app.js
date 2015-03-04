@@ -25,7 +25,6 @@ function LoadImages(imageData)
             imageData.data.minTagId = response.data[i].id
             imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
           }
-        }
       }
   })
 }
