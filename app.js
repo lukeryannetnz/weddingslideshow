@@ -19,11 +19,10 @@ function LoadImages(imageData)
   { count : "10", minTagId : imageData.data.minTagId},
     function(response){
       for(var i = 0; i < response.data.length; i++){
-        if(response.data[i].images.standard_resolution.url)
-        {
-          imageData.data.minTagId = response.data[i].id
-          if(!$.inArray(response.data[i].images.standard_resolution.url, imageData.data.imageUris))
+        if(response.data[i].images.standard_resolution.url &&
+            !$.inArray(response.data[i].images.standard_resolution.url, imageData.data.imageUris))
           {
+            imageData.data.minTagId = response.data[i].id
             imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
           }
         }
