@@ -11,6 +11,10 @@ $(document).ready(function(){
     console.log('access token: '.concat(accessToken));
     location.hash = '';
   }
+  else
+  {
+    $("login").display = "block";
+  }
 
   $("#go").click(function(){
     var tag = $("#hashtag").val();
