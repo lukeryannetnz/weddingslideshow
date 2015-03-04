@@ -22,6 +22,5 @@ $(document).ready(function(){
     console.log(searchuri);
     $.getJSON(searchuri,(function(response){
           console.log(response);
-        })
+    })
   })
-})
