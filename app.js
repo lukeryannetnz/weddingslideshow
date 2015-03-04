@@ -10,7 +10,7 @@ function ImageData(imageUris, minTagId)
 function LoadImages(imageData)
 {
   var tag = $("#hashtag").val();
-  var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken.data + "&callback=?";
+  var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
   console.log(searchuri);
   $.getJSON(searchuri,
     { count : "10", maxtagid : imageData.minTagId},
@@ -70,5 +70,5 @@ $(document).ready(function(){
     ShowSearchBox();
   }
 
-  $("#go").click(accessToken, LoadImages);
+  $("#go").click(LoadImages);
 })
