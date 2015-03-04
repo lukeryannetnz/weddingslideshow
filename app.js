@@ -13,9 +13,10 @@ $(document).ready(function(){
   }
 
   $("#go").click(function(){
-    var tag = ("#hashtag").val();
+    var tag = $("#hashtag").val();
     var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken;
-    console.log('searchuri');
-    $().ajax("searchuri")
+    console.log(searchuri);
+    var response = $().get(searchuri, data:{ count:5 });
+    console.log(response);
   })
 })
