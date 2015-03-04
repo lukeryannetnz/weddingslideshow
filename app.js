@@ -1,6 +1,5 @@
-//dirty global scope for now
-var accessToken;
 
+// datastructure for image uris
 function ImageData(imageUris, minTagId)
 {
   this.imageUris = imageUris;
@@ -9,6 +8,7 @@ function ImageData(imageUris, minTagId)
 
 //dirty global scope for now
 var imageData = new ImageData([], 0);
+var accessToken;
 
 function LoadImages(imageData)
 {
@@ -24,7 +24,6 @@ function LoadImages(imageData)
         {
           imageData.minTagId = response.data[i].id
           imageData.imageUris.push(response.data[i].images.standard_resolution.url)
-          $("#photo").attr("src",response.data[i].images.standard_resolution.url)
         }
       }
       console.log(imageData);
@@ -60,6 +59,19 @@ function ShowSearchBox()
   $("#search").removeClass("hidden");
 }
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function UpdateImageSrc()
+{
+  if(imageData.imageUris && imageData.imageUris > 0)
+  {
+    var index = getRandomInt(0, imageData.imageUris.Length - 1);
+    $("#photo").attr("src",response.data[index].images.standard_resolution.url)
+  }
+}
+
 $(document).ready(function(){
   $("#login").click(RedirectToLogin);
 
@@ -74,4 +86,5 @@ $(document).ready(function(){
   }
 
   $("#go").click(imageData, LoadImages);
+  window.setInterval(UpdateImageSrc, 500)
 })
