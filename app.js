@@ -1,15 +1,5 @@
-$(document).ready(function(){
-  $("#login").click(RedirectToLogin);
-  $("#go").click(LoadImages)
 
-  var accessToken = TryGetAccessToken;
-  if(!accessToken)
-  {
-    ShowLoginButton();
-  }
-})
-
-function LoadImages()
+function LoadImages(accessToken)
 {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
@@ -42,3 +32,24 @@ function ShowLoginButton()
 {
   $("#login").removeClass("hidden");
 }
+
+function ShowSearchBox()
+{
+  $("#search").removeClass("hidden");
+}
+
+$(document).ready(function(){
+  $("#login").click(RedirectToLogin);
+
+  var accessToken = TryGetAccessToken();
+  if(!accessToken)
+  {
+    ShowLoginButton();
+  }
+  else
+  {
+    ShowSearchBox();
+  }
+
+  $("#go").click(accessToken, LoadImages);
+})
