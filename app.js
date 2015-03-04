@@ -5,4 +5,5 @@ $(document).ready(function(){
 
   var accessToken = location.hash.split('=')[1];
   console.log('access token'.concat(accessToken));
+  location.hash = null;
 })
