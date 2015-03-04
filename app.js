@@ -1,6 +1,6 @@
 // this code was hacked together to get a prototype working. should be re-written with a framework. or at least split into separate files!
-var DataPollFrequency = 30000;
-var ImageSwapFrequency = 5000;
+var DataPollFrequency = 120000;
+var ImageSwapFrequency = 15000;
 
 // datastructure for image uris
 function ImageData(imageUris, minTagId)
