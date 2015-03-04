@@ -27,9 +27,13 @@ function LoadImages(imageData)
           }
       }
   })
+}
 
-  FullscreenImage();
+function GoButtonHander(imageData)
+{
+  LoadImages(imageData);
   window.setInterval(LoadImages, 30000, imageData)
+  FullscreenImage();
 }
 
 function RedirectToLogin()
@@ -125,7 +129,7 @@ $(document).ready(function(){
     ShowSearchBox();
   }
 
-  $("#go").click(imageData, LoadImages);
+  $("#go").click(imageData, GoButtonHander);
   window.setInterval(UpdateImageSrc, 5000)
   $(window).resize(FullscreenImage);
 })
