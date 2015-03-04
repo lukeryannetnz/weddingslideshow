@@ -29,6 +29,7 @@ function LoadImages(imageData)
   })
 
   FullscreenImage();
+  window.setInterval(LoadImages, 30000, imageData)
 }
 
 function RedirectToLogin()
@@ -126,4 +127,5 @@ $(document).ready(function(){
 
   $("#go").click(imageData, LoadImages);
   window.setInterval(UpdateImageSrc, 5000)
+  $(window).resize(FullscreenImage);
 })
