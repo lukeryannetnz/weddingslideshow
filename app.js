@@ -16,7 +16,7 @@ function LoadImages(imageData)
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
   console.log(searchuri);
   $.getJSON(searchuri,
-  { count : "10", maxtagid : imageData.data.minTagId},
+  { count : "10", minTagId : imageData.data.minTagId},
     function(response){
       console.log(response);
       for(var i = 0; i < response.data.length; i++){
