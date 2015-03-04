@@ -14,11 +14,10 @@ $(document).ready(function(){
 
   $("#go").click(function(){
     var tag = $("#hashtag").val();
-    var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "?callback=?";
+    var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
     console.log(searchuri);
-    $.get(searchuri,{ data: { count : "5" }, crossDomain: true })
-      .done(function(data){
-          console.log(data);
+    $.getJSON(searchuri,(function(response){
+          console.log(response);
         })
   })
 })
