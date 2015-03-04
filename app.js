@@ -20,7 +20,7 @@ function LoadImages(imageData)
         if(response.data[i].images.standard_resolution.url)
         {
           imageData.minTagId = response.data[i].id
-          imageData.push(response.data[i].images.standard_resolution.url)
+          imageData.imageUris.push(response.data[i].images.standard_resolution.url)
           $("#photo").attr("src",response.data[i].images.standard_resolution.url)
         }
       }
@@ -70,5 +70,5 @@ $(document).ready(function(){
     ShowSearchBox();
   }
 
-  $("#go").click(LoadImages);
+  $("#go").click(new ImageData([], 0), LoadImages);
 })
