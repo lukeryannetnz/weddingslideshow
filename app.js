@@ -1,3 +1,5 @@
+int DataPollFrequency = 30000;
+int ImageSwapFrequency = 5000;
 
 // datastructure for image uris
 function ImageData(imageUris, minTagId)
@@ -32,7 +34,7 @@ function LoadImages(imageData)
 function GoButtonHander(imageData)
 {
   LoadImages(imageData);
-  window.setInterval(LoadImages, 30000, imageData)
+  window.setInterval(LoadImages, DataPollFrequency, imageData)
   FullscreenImage();
 }
 
@@ -130,6 +132,6 @@ $(document).ready(function(){
   }
 
   $("#go").click(imageData, GoButtonHander);
-  window.setInterval(UpdateImageSrc, 5000)
+  window.setInterval(UpdateImageSrc, ImageSwapFrequency)
   $(window).resize(FullscreenImage);
 })
