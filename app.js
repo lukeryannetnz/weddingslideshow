@@ -16,7 +16,9 @@ $(document).ready(function(){
     var tag = $("#hashtag").val();
     var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken;
     console.log(searchuri);
-    var response = $().get(searchuri, { count : "5" });
-    console.log(response);
+    var response = $().get(searchuri, { count : "5" })
+      .done(function(data){
+          console.log(data);
+        })
   })
 })
