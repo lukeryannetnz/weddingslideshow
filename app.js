@@ -67,8 +67,8 @@ function UpdateImageSrc()
 {
   if(imageData.imageUris && imageData.imageUris.length > 0)
   {
-    var index = getRandomInt(0, imageData.imageUris.Length - 1);
-    $("#photo").attr("src",response.data[index].images.standard_resolution.url)
+    var index = getRandomInt(0, imageData.imageUris.length - 1);
+    $("#photo").attr("src",imageData.imageUris[index];
   }
 }
 
