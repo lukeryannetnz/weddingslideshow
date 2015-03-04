@@ -36,7 +36,7 @@ function GoButtonHander(imageData)
 {
   LoadImages(imageData);
   window.setInterval(LoadImages, DataPollFrequency, imageData)
-  window.setTimeout(UpdateImageSrc, 2);
+  window.setTimeout(UpdateImageSrc, 2000);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency)
   FullscreenImage();
   $(window).resize(FullscreenImage);
