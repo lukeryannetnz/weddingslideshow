@@ -2,7 +2,7 @@
 function LoadImages(accessToken)
 {
   var tag = $("#hashtag").val();
-  var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
+  var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken.data + "&callback=?";
   console.log(searchuri);
   $.getJSON(searchuri, function(response){
     console.log(response);
