@@ -20,7 +20,7 @@ function LoadImages(imageData)
     function(response){
       for(var i = 0; i < response.data.length; i++){
         if(response.data[i].images.standard_resolution.url &&
-            !$.inArray(response.data[i].images.standard_resolution.url, imageData.data.imageUris))
+            $.inArray(response.data[i].images.standard_resolution.url, imageData.data.imageUris) < 0)
           {
             imageData.data.minTagId = response.data[i].id
             imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
