@@ -36,7 +36,10 @@ function GoButtonHander(imageData)
 {
   LoadImages(imageData);
   window.setInterval(LoadImages, DataPollFrequency, imageData)
+  UpdateImageSrc();
+  window.setInterval(UpdateImageSrc, ImageSwapFrequency)
   FullscreenImage();
+  $(window).resize(FullscreenImage);
 }
 
 function RedirectToLogin()
@@ -133,6 +136,4 @@ $(document).ready(function(){
   }
 
   $("#go").click(imageData, GoButtonHander);
-  window.setInterval(UpdateImageSrc, ImageSwapFrequency)
-  $(window).resize(FullscreenImage);
 })
