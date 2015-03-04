@@ -86,5 +86,5 @@ $(document).ready(function(){
   }
 
   $("#go").click(imageData, LoadImages);
-  window.setInterval(UpdateImageSrc, 500)
+  window.setInterval(UpdateImageSrc, 5000)
 })
