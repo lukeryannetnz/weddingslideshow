@@ -1,12 +1,30 @@
+//dirty global scope for now
+var accessToken;
 
-function LoadImages(accessToken)
+function ImageData(imageUris, minTagId)
+{
+  this.imageUris = imageUris;
+  this.maxTagId = minTagId;
+}
+
+function LoadImages(imageData)
 {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken.data + "&callback=?";
   console.log(searchuri);
-  $.getJSON(searchuri, function(response){
-    console.log(response);
-    $("#photo").attr("src",response.data[0].images.standard_resolution.url);
+  $.getJSON(searchuri,
+    { count : "10", maxtagid : imageData.minTagId},
+    function(response){
+      console.log(response);
+      for(var i = 0; i < response.data.length; i++){
+        if(response.data[i].images.standard_resolution.url)
+        {
+          imageData.minTagId = response.data[i].id
+          imageData.push(response.data[i].images.standard_resolution.url)
+          $("#photo").attr("src",response.data[i].images.standard_resolution.url)
+        }
+      }
+      console.log(imageData);
   })
 }
 
@@ -42,7 +60,7 @@ function ShowSearchBox()
 $(document).ready(function(){
   $("#login").click(RedirectToLogin);
 
-  var accessToken = TryGetAccessToken();
+  accessToken = TryGetAccessToken();
   if(!accessToken)
   {
     ShowLoginButton();
