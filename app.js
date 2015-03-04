@@ -6,7 +6,7 @@ function LoadImages(accessToken)
   console.log(searchuri);
   $.getJSON(searchuri, function(response){
     console.log(response);
-    $("#photo").src = response[0].images[2].url;
+    $("#photo").src = response.data[0].images.standard_resolution.url;
   })
 }
 
