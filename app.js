@@ -13,14 +13,15 @@ $(document).ready(function(){
   }
   else
   {
-    $("login").display = "block";
+    $("#login").removeClass("hidden");
   }
 
   $("#go").click(function(){
     var tag = $("#hashtag").val();
     var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
     console.log(searchuri);
-    $.getJSON(searchuri,(function(response){
+    $.getJSON(searchuri, function(response){
           console.log(response);
     })
   })
+})
