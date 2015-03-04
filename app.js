@@ -22,8 +22,8 @@ function LoadImages(imageData)
       for(var i = 0; i < response.data.length; i++){
         if(response.data[i].images.standard_resolution.url)
         {
-          imageData.minTagId = response.data[i].id
-          imageData.imageUris.push(response.data[i].images.standard_resolution.url)
+          imageData.data.minTagId = response.data[i].id
+          imageData.data.imageUris.push(response.data[i].images.standard_resolution.url)
         }
       }
       console.log(imageData);
