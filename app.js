@@ -1,45 +1,40 @@
 // this code was hacked together to get a prototype working. should be re-written with a framework. or at least split into separate files!
-var DataPollFrequency = 120000;
+var DataPollFrequency = 120;
 var ImageSwapFrequency = 30000;
 
 // datastructure for image uris
-function ImageData(imageUris, minTagId)
+function ImageData(imageUris, maxTagId)
 {
   this.imageUris = imageUris;
-  this.watermark = minTagId;
-  this.workingwatermark = minTagId;
-  this.newwatermark = minTagId;
+  this.watermark = maxTagId;
 }
 
 //dirty global scope for now
 var imageData = new ImageData([], 0);
 var accessToken;
 
-function LoadImages(imageData, recursionDepth) {
+function LoadImages(imageData, recursionDepth, minTagId) {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
+  var searchParams = if(minTagId){
+    { minTagId : minTagId },
+  } else {
+    { maxTagId : imageData.watermark },
+  }
 
   $.getJSON(searchuri,
-    { count : "25", minTagId : imageData.watermark },
+    searchParams,
     function(response) {
         for(var i = 0; i < response.data.length; i++) {
-          imageData.workingwatermark = response.data[i].id;
-          if(response.data[i].images.standard_resolution.url){
-                imageData.minTagId = imageData.workingwatermark;
+          if(response.data[i].images.standard_resolution.url &&
+            $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0)){
                 imageData.imageUris.push(response.data[i].images.standard_resolution.url);
           }
         }
 
-        if(imageData.workingwatermark > imageData.newwatermark) {
-          imageData.newwatermark = imageData.workingwatermark;
-        }
-
-        if(imageData.workingwatermark != imageData.watermark && recursionDepth > 0) {
+        if(recursionDepth > 0) {
           recursionDepth--;
-          LoadImages(imageData);
-        }
-        else{
-          imageData.watermark = imageData.newwatermark;
+          LoadImages(imageData, recursionDepth, response.pagination.nextMaxTagId);
         }
     })
 }
