@@ -20,7 +20,7 @@ function LoadImages(imageData, recursionDepth) {
 
   var query;
   if(imageData.minTagId){
-    console.log('recursing. image count: ' + imageData.imageUris.length)
+    console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
     query = { minTagId : imageData.minTagId }
   } else {
     console.log('polling. image count: ' + imageData.imageUris.length)
@@ -45,7 +45,9 @@ function LoadImages(imageData, recursionDepth) {
         if(recursionDepth > 0) {
           recursionDepth--;
           imageData.minTagId = response.pagination.min_tag_id;
-          LoadImages(imageData, recursionDepth);
+
+          //poll but not too quickly
+          window.SetTimeout(LoadImages(imageData, recursionDepth), 200);
         }
         else {
           //end of recursion, reset maxTagId
