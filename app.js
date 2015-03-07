@@ -29,7 +29,7 @@ function LoadImages(imageData, recursionDepth) {
 
         if(recursionDepth > 0) {
           recursionDepth--;
-          imageData.watermark = response.pagination.nextMaxTagId;
+          imageData.watermark = response.pagination.next_max_tag_id;
           LoadImages(imageData, recursionDepth);
         }
     })
