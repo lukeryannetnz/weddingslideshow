@@ -16,19 +16,17 @@ var accessToken;
 
 function LoadImages(imageData, recursionDepth) {
   var tag = $("#hashtag").val();
-  var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
+  var searchuri;
 
-  var query;
   if(imageData.minTagId){
     console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
-    query = { min_tag_id : imageData.minTagId }
-  } else {
+    var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&min_tag_id=" + imageData.minTagId + "&callback=?";
+    } else {
     console.log('polling. image count: ' + imageData.imageUris.length)
-    query = { max_tag_id : imageData.watermark }
+    var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + imageData.watermark + "&callback=?";
   }
 
   $.getJSON(searchuri,
-    query,
     function(response) {
         for(var i = 0; i < response.data.length; i++) {
           if(response.data[i].images.standard_resolution.url &&
