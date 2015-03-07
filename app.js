@@ -18,7 +18,7 @@ function LoadImages(imageData, recursionDepth, waterMark) {
 
   if(waterMark){
     console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
-    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + imageData.watermark + "&callback=?";
+    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + watermark + "&callback=?";
 
     } else {
     console.log('polling. image count: ' + imageData.imageUris.length)
