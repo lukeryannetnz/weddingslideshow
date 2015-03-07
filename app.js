@@ -1,5 +1,5 @@
 // this code was hacked together to get a prototype working. should be re-written with a framework. or at least split into separate files!
-var DataPollFrequency = 120000;
+var DataPollFrequency = 2000;
 var ImageSwapFrequency = 30000;
 
 // datastructure for image uris
@@ -38,7 +38,7 @@ function LoadImages(imageData, recursionDepth, waterMark) {
           recursionDepth--;
 
           //poll but not too quickly
-          window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 200);
+          window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 50);
         }
     })
 }
