@@ -2,52 +2,51 @@
 var DataPollFrequency = 120000;
 var ImageSwapFrequency = 30000;
 
-// datastructure for image uris
-function ImageData(imageUris, maxTagId)
+function ImageData()
 {
-  this.imageUris = imageUris;
+  this.imageUris = []];
+
+  this.LoadImages = function(tag, imageData, recursionDepth, waterMark) {
+    var searchuri;
+
+    if(waterMark){
+      console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
+      searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
+
+      } else {
+      console.log('polling. image count: ' + imageData.imageUris.length)
+      searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
+    }
+
+    $.getJSON(searchuri,
+      function(response) {
+          for(var i = 0; i < response.data.length; i++) {
+            if(response.data[i].images.standard_resolution.url &&
+              $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0){
+                  imageData.imageUris.push(response.data[i].images.standard_resolution.url);
+            }
+            else{
+              recursionDepth = 0;
+            }
+          }
+
+          if(recursionDepth > 0) {
+            recursionDepth--;
+            window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 10);
+          }
+      })
+  }
 }
 
 //dirty global scope for now
-var imageData = new ImageData([], 0);
+var imageData = new ImageData();
 var accessToken;
 
-function LoadImages(imageData, recursionDepth, waterMark) {
-  var tag = $("#hashtag").val();
-  var searchuri;
-
-  if(waterMark){
-    console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
-    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
-
-    } else {
-    console.log('polling. image count: ' + imageData.imageUris.length)
-    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
-  }
-
-  $.getJSON(searchuri,
-    function(response) {
-        for(var i = 0; i < response.data.length; i++) {
-          if(response.data[i].images.standard_resolution.url &&
-            $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0){
-                imageData.imageUris.push(response.data[i].images.standard_resolution.url);
-          }
-          else{
-            recursionDepth = 0;
-          }
-        }
-
-        if(recursionDepth > 0) {
-          recursionDepth--;
-
-          window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 10);
-        }
-    })
-}
-
 function GoButtonHander(imageData){
-  LoadImages(imageData.data, 50);
-  window.setInterval(LoadImages, DataPollFrequency, imageData.data, 10)
+  var tag = $("#hashtag").val();
+
+  imageData.LoadImages(tag, imageData.data, 50);
+  window.setInterval(imageData.LoadImages, DataPollFrequency, tag, imageData.data, 10)
   window.setTimeout(UpdateImageSrc, 1000);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency)
   FullscreenImage();
