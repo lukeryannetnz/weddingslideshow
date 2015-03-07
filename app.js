@@ -22,7 +22,7 @@ function LoadImages(imageData, recursionDepth) {
     function(response) {
         for(var i = 0; i < response.data.length; i++) {
           if(response.data[i].images.standard_resolution.url &&
-            $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0)){
+            $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0){
                 imageData.imageUris.push(response.data[i].images.standard_resolution.url);
           }
         }
