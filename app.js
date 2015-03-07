@@ -47,7 +47,7 @@ function LoadImages(imageData, recursionDepth) {
           imageData.minTagId = response.pagination.min_tag_id;
 
           //poll but not too quickly
-          window.SetTimeout(LoadImages(imageData, recursionDepth), 200);
+          window.setTimeout(LoadImages(imageData, recursionDepth), 200);
         }
         else {
           //end of recursion, reset maxTagId
