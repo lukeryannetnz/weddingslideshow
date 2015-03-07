@@ -39,16 +39,15 @@ function ImageData()
 }
 
 //dirty global scope for now
-var imageData = new ImageData();
 var accessToken;
 
 function GoButtonHander(imageData){
   var tag = $("#hashtag").val();
 
-  imageData.LoadImages(tag, imageData.data, 50);
-  window.setInterval(imageData.LoadImages, DataPollFrequency, tag, imageData.data, 10)
-  window.setTimeout(UpdateImageSrc, 1000);
-  window.setInterval(UpdateImageSrc, ImageSwapFrequency)
+  imageData.data.LoadImages(tag, imageData.data, 50);
+  window.setInterval(imageData.data.LoadImages, DataPollFrequency, tag, imageData.data, 10)
+  window.setTimeout(UpdateImageSrc, imageData.data, 1000);
+  window.setInterval(UpdateImageSrc, imageData.data, ImageSwapFrequency)
   FullscreenImage();
   $(window).resize(FullscreenImage);
 }
@@ -84,7 +83,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function UpdateImageSrc(){
+function UpdateImageSrc(imageData){
   if(imageData.imageUris && imageData.imageUris.length > 0){
     var index = getRandomInt(0, imageData.imageUris.length - 1);
     $("#photo").attr("src",imageData.imageUris[index]);
@@ -136,5 +135,6 @@ $(document).ready(function(){
     ShowSearchBox();
   }
 
+  var imageData = new ImageData();
   $("#go").click(imageData, GoButtonHander);
 })
