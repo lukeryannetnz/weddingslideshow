@@ -20,10 +20,10 @@ function LoadImages(imageData, recursionDepth) {
 
   if(imageData.minTagId){
     console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
-    var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&min_tag_id=" + imageData.minTagId + "&callback=?";
+    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&min_tag_id=" + imageData.minTagId + "&callback=?";
     } else {
     console.log('polling. image count: ' + imageData.imageUris.length)
-    var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + imageData.watermark + "&callback=?";
+    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + imageData.watermark + "&callback=?";
   }
 
   $.getJSON(searchuri,
