@@ -4,9 +4,10 @@ var ImageSwapFrequency = 30000;
 
 function ImageData()
 {
+  var that = this;
   this.imageUris = [];
 
-  this.LoadImages = function(tag, imageData, recursionDepth, waterMark) {
+  this.LoadImages = function(tag, recursionDepth, waterMark) {
     var searchuri;
 
     if(waterMark){
@@ -32,7 +33,7 @@ function ImageData()
 
           if(recursionDepth > 0) {
             recursionDepth--;
-            window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 10);
+            window.setTimeout(that.LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 10);
           }
       })
   }
@@ -44,8 +45,8 @@ var accessToken;
 function GoButtonHander(imageData){
   var tag = $("#hashtag").val();
 
-  imageData.data.LoadImages(tag, imageData.data, 50);
-  window.setInterval(imageData.data.LoadImages, DataPollFrequency, tag, imageData.data, 10)
+  imageData.data.LoadImages(tag, 50);
+  window.setInterval(imageData.data.LoadImages, DataPollFrequency, tag, 10)
   window.setTimeout(UpdateImageSrc, imageData.data, 1000);
   window.setInterval(UpdateImageSrc, imageData.data, ImageSwapFrequency)
   FullscreenImage();
