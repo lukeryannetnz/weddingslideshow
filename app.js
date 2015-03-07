@@ -7,6 +7,7 @@ function ImageData(imageUris, maxTagId)
 {
   this.imageUris = imageUris;
   this.watermark = maxTagId;
+  this.minTagId = 0;
 }
 
 //dirty global scope for now
@@ -17,8 +18,15 @@ function LoadImages(imageData, recursionDepth) {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
 
+  var query;
+  if(imageData.minTagId){
+    query = { minTagId : imageData.minTagId }
+  } else {
+    query = { maxTagId : imageData.watermark }
+  }
+
   $.getJSON(searchuri,
-    { maxTagId : imageData.watermark },
+    query,
     function(response) {
         for(var i = 0; i < response.data.length; i++) {
           if(response.data[i].images.standard_resolution.url &&
@@ -27,10 +35,19 @@ function LoadImages(imageData, recursionDepth) {
           }
         }
 
+        //keep the latest watermark for the next time we query
+        if(!imageData.minTagId) {
+          imageData.watermark = response.pagination.next_max_tag_id;
+        }
+
         if(recursionDepth > 0) {
           recursionDepth--;
-          imageData.watermark = response.pagination.next_max_tag_id;
+          imageData.minTagId = response.data.pagination.min_tag_id;
           LoadImages(imageData, recursionDepth);
+        }
+        else {
+          //end of recursion, reset maxTagId
+          imageData.minTagId = null;
         }
     })
 }
