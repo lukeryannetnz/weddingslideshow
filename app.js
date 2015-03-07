@@ -42,8 +42,10 @@ function LoadImages(imageData, recursionDepth) {
 
         if(recursionDepth > 0) {
           recursionDepth--;
-          console.log("setting minTagId to response : " + response.pagination.min_tag_id)
-          imageData.minTagId = response.pagination.min_tag_id;
+          if(response.pagination.min_tag_id) {
+            console.log("setting minTagId to response : " + response.pagination.min_tag_id)
+            imageData.minTagId = response.pagination.min_tag_id;
+          }
 
           //poll but not too quickly
           window.setTimeout(LoadImages(imageData, recursionDepth), 200);
