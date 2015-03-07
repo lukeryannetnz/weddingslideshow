@@ -13,17 +13,12 @@ function ImageData(imageUris, maxTagId)
 var imageData = new ImageData([], 0);
 var accessToken;
 
-function LoadImages(imageData, recursionDepth, minTagId) {
+function LoadImages(imageData, recursionDepth) {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
-  var searchParams = if(minTagId){
-    { minTagId : minTagId },
-  } else {
-    { maxTagId : imageData.watermark },
-  }
 
   $.getJSON(searchuri,
-    searchParams,
+    { maxTagId : imageData.watermark },
     function(response) {
         for(var i = 0; i < response.data.length; i++) {
           if(response.data[i].images.standard_resolution.url &&
@@ -34,7 +29,8 @@ function LoadImages(imageData, recursionDepth, minTagId) {
 
         if(recursionDepth > 0) {
           recursionDepth--;
-          LoadImages(imageData, recursionDepth, response.pagination.nextMaxTagId);
+          imageData.watermark = response.pagination.nextMaxTagId;
+          LoadImages(imageData, recursionDepth);
         }
     })
 }
