@@ -44,7 +44,7 @@ function LoadImages(imageData, recursionDepth) {
 
         if(recursionDepth > 0) {
           recursionDepth--;
-          imageData.minTagId = response.data.pagination.min_tag_id;
+          imageData.minTagId = response.pagination.min_tag_id;
           LoadImages(imageData, recursionDepth);
         }
         else {
