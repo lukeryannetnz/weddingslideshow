@@ -46,7 +46,7 @@ function LoadImages(imageData, recursionDepth, waterMark) {
 }
 
 function GoButtonHander(imageData){
-  LoadImages(imageData.data, 100);
+  LoadImages(imageData.data, 50);
   window.setInterval(LoadImages, DataPollFrequency, imageData.data, 10)
   window.setTimeout(UpdateImageSrc, 1000);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency)
