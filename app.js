@@ -21,10 +21,10 @@ function LoadImages(imageData, recursionDepth) {
   var query;
   if(imageData.minTagId){
     console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
-    query = { minTagId : imageData.minTagId }
+    query = { min_tag_id : imageData.minTagId }
   } else {
     console.log('polling. image count: ' + imageData.imageUris.length)
-    query = { maxTagId : imageData.watermark }
+    query = { max_tag_id : imageData.watermark }
   }
 
   $.getJSON(searchuri,
