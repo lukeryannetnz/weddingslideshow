@@ -45,8 +45,8 @@ function LoadImages(imageData, recursionDepth) {
 }
 
 function GoButtonHander(imageData){
-  LoadImages(imageData, 10);
-  window.setInterval(LoadImages, DataPollFrequency, imageData, 10)
+  LoadImages(imageData.Data, 10);
+  window.setInterval(LoadImages, DataPollFrequency, imageData.Data, 10)
   window.setTimeout(UpdateImageSrc, 1000);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency)
   FullscreenImage();
