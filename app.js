@@ -11,7 +11,7 @@ function ImageData()
     var searchuri;
 
     if(waterMark){
-      console.log('recursing.' + recursionDepth)
+      console.log('recursing: ' + recursionDepth + ".")
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
 
       } else {
