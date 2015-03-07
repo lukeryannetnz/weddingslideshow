@@ -32,13 +32,15 @@ function LoadImages(imageData, recursionDepth, waterMark) {
             $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0){
                 imageData.imageUris.push(response.data[i].images.standard_resolution.url);
           }
+          else{
+            recursionDepth = 0;
+          }
         }
 
         if(recursionDepth > 0) {
           recursionDepth--;
 
-          //poll but not too quickly
-          window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 50);
+          window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 10);
         }
     })
 }
