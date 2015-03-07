@@ -31,7 +31,7 @@ function ImageData()
             }
           }
 
-          if(recursionDepth > 0) {
+          if(recursionDepth > 0 && response.pagination.next_max_tag_id) {
             recursionDepth--;
             that.LoadImages(tag, recursionDepth, response.pagination.next_max_tag_id);
           }
