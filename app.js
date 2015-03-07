@@ -6,26 +6,23 @@ var ImageSwapFrequency = 30000;
 function ImageData(imageUris, maxTagId)
 {
   this.imageUris = imageUris;
-  this.watermark = maxTagId;
-  this.minTagId = 0;
 }
 
 //dirty global scope for now
 var imageData = new ImageData([], 0);
 var accessToken;
 
-function LoadImages(imageData, recursionDepth) {
+function LoadImages(imageData, recursionDepth, waterMark) {
   var tag = $("#hashtag").val();
   var searchuri;
 
-  if(imageData.minTagId){
+  if(waterMark){
     console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
-    //searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&min_tag_id=" + imageData.minTagId + "&callback=?";
     searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + imageData.watermark + "&callback=?";
 
     } else {
     console.log('polling. image count: ' + imageData.imageUris.length)
-    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + imageData.watermark + "&callback=?";
+    searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
   }
 
   $.getJSON(searchuri,
@@ -37,25 +34,11 @@ function LoadImages(imageData, recursionDepth) {
           }
         }
 
-        //keep the latest watermark for the next time we query
-        //if(!imageData.minTagId) {
-          imageData.watermark = response.pagination.next_max_tag_id;
-        //}
-
         if(recursionDepth > 0) {
           recursionDepth--;
-          if(response.pagination.min_tag_id) {
-            console.log("setting minTagId to response : " + response.pagination.min_tag_id)
-            imageData.minTagId = response.pagination.min_tag_id;
-          }
 
           //poll but not too quickly
-          window.setTimeout(LoadImages(imageData, recursionDepth), 200);
-        }
-        else {
-          console.log("finished recursing. nulling minTagId")
-          //end of recursion, reset maxTagId
-          imageData.minTagId = null;
+          window.setTimeout(LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 200);
         }
     })
 }
