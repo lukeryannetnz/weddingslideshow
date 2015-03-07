@@ -6,73 +6,77 @@ var ImageSwapFrequency = 30000;
 function ImageData(imageUris, minTagId)
 {
   this.imageUris = imageUris;
-  this.minTagId = minTagId;
+  this.watermark = minTagId;
+  this.workingwatermark = minTagId;
+  this.newwatermark = minTagId;
 }
 
 //dirty global scope for now
 var imageData = new ImageData([], 0);
 var accessToken;
 
-function LoadImages(imageData)
-{
+function LoadImages(imageData, recursionDepth) {
   var tag = $("#hashtag").val();
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
 
   $.getJSON(searchuri,
-  { count : "10", minTagId : imageData.data.minTagId},
-    function(response){
-      for(var i = 0; i < response.data.length; i++){
-        if(response.data[i].images.standard_resolution.url &&
-            $.inArray(response.data[i].images.standard_resolution.url, imageData.data.imageUris) < 0)
-          {
-            imageData.data.minTagId = response.data[i].id
-            imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
+    { count : "25", minTagId : imageData.data.watermark },
+    function(response) {
+        for(var i = 0; i < response.data.length; i++) {
+          imageData.workingwatermark = response.data[i].id;
+          if(response.data[i].images.standard_resolution.url){
+                imageData.data.minTagId = imageData.workingwatermark;
+                imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
           }
-      }
-  })
+        }
+
+        if(imageData.workingwatermark > imageData.newwatermark) {
+          imageData.newwatermark = imageData.workingwatermark;
+        }
+
+        if(imageData.workingwatermark != imageData.watermark && recursionDepth > 0) {
+          recursionDepth--;
+          LoadImages(imageData);
+        }
+        else{
+          imageData.watermark = imageData.newwatermark;
+        }
+    })
 }
 
-function GoButtonHander(imageData)
-{
-  LoadImages(imageData);
-  window.setInterval(LoadImages, DataPollFrequency, imageData)
+function GoButtonHander(imageData){
+  LoadImages(imageData, 10);
+  window.setInterval(LoadImages, DataPollFrequency, imageData, 10)
   window.setTimeout(UpdateImageSrc, 1000);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency)
   FullscreenImage();
   $(window).resize(FullscreenImage);
 }
 
-function RedirectToLogin()
-{
+function RedirectToLogin(){
   window.location = "https://instagram.com/oauth/authorize/?client_id=834dd36a346648bdb999084cd10c3c79&redirect_uri=http://weddingslideshow.azurewebsites.net&response_type=token"
 }
 
-function TryGetAccessToken()
-{
+function TryGetAccessToken(){
   var token;
 
-  if(location.hash)
-  {
+  if(location.hash){
     token = location.hash.split('=')[1];
-    console.log('access token: '.concat(token));
     location.hash = '';
   }
 
   return token;
 }
 
-function ShowLoginButton()
-{
+function ShowLoginButton(){
   $("#login").removeClass("hidden");
 }
 
-function ShowSearchBox()
-{
+function ShowSearchBox(){
   $("#search").removeClass("hidden");
 }
 
-function HideSearchBox()
-{
+function HideSearchBox(){
   $("#search").addClass("hidden");
 }
 
@@ -80,17 +84,14 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function UpdateImageSrc()
-{
-  if(imageData.imageUris && imageData.imageUris.length > 0)
-  {
+function UpdateImageSrc(){
+  if(imageData.imageUris && imageData.imageUris.length > 0){
     var index = getRandomInt(0, imageData.imageUris.length - 1);
     $("#photo").attr("src",imageData.imageUris[index]);
   }
 }
 
-function FullscreenImage()
-{
+function FullscreenImage(){
   var $img = $('#photo'),
   imageWidth = $img[0].width, //need the raw width due to a jquery bug that affects chrome
   imageHeight = $img[0].height, //need the raw height due to a jquery bug that affects chrome
