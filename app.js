@@ -20,8 +20,10 @@ function LoadImages(imageData, recursionDepth) {
 
   var query;
   if(imageData.minTagId){
+    console.writeline('recursing. image count: ' + imageData.imageUris.length)
     query = { minTagId : imageData.minTagId }
   } else {
+    console.writeline('polling. image count: ' + imageData.imageUris.length)
     query = { maxTagId : imageData.watermark }
   }
 
