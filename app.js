@@ -11,11 +11,11 @@ function ImageData()
     var searchuri;
 
     if(waterMark){
-      console.log('recursing. ' + recursionDepth + ' image count: ' + that.imageUris.length)
+      console.log('recursing.' + recursionDepth)
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
 
       } else {
-      console.log('polling. image count: ' + that.imageUris.length)
+      console.log('polling.')
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
     }
 
@@ -30,6 +30,8 @@ function ImageData()
               recursionDepth = 0;
             }
           }
+
+          console.log('image count: ' + that.imageUris.length)
 
           if(recursionDepth > 0 && response.pagination.next_max_tag_id) {
             recursionDepth--;
