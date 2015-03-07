@@ -4,7 +4,7 @@ var ImageSwapFrequency = 30000;
 
 function ImageData()
 {
-  this.imageUris = []];
+  this.imageUris = [];
 
   this.LoadImages = function(tag, imageData, recursionDepth, waterMark) {
     var searchuri;
