@@ -11,11 +11,11 @@ function ImageData()
     var searchuri;
 
     if(waterMark){
-      console.log('recursing. ' + recursionDepth + ' image count: ' + imageData.imageUris.length)
+      console.log('recursing. ' + recursionDepth + ' image count: ' + that.imageUris.length)
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
 
       } else {
-      console.log('polling. image count: ' + imageData.imageUris.length)
+      console.log('polling. image count: ' + that.imageUris.length)
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
     }
 
@@ -23,8 +23,8 @@ function ImageData()
       function(response) {
           for(var i = 0; i < response.data.length; i++) {
             if(response.data[i].images.standard_resolution.url &&
-              $.inArray(response.data[i].images.standard_resolution.url, imageData.imageUris) < 0){
-                  imageData.imageUris.push(response.data[i].images.standard_resolution.url);
+              $.inArray(response.data[i].images.standard_resolution.url, that.imageUris) < 0){
+                  that.imageUris.push(response.data[i].images.standard_resolution.url);
             }
             else{
               recursionDepth = 0;
@@ -33,7 +33,7 @@ function ImageData()
 
           if(recursionDepth > 0) {
             recursionDepth--;
-            window.setTimeout(that.LoadImages(imageData, recursionDepth, response.pagination.next_max_tag_id), 10);
+            window.setTimeout(that.LoadImages(tag, recursionDepth, response.pagination.next_max_tag_id), 10);
           }
       })
   }
