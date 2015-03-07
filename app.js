@@ -33,7 +33,7 @@ function ImageData()
 
           if(recursionDepth > 0) {
             recursionDepth--;
-            window.setTimeout(that.LoadImages(tag, recursionDepth, response.pagination.next_max_tag_id), 10);
+            that.LoadImages(tag, recursionDepth, response.pagination.next_max_tag_id);
           }
       })
   }
@@ -47,8 +47,9 @@ function GoButtonHander(imageData){
 
   imageData.data.LoadImages(tag, 50);
   window.setInterval(imageData.data.LoadImages, DataPollFrequency, tag, 10)
-  window.setTimeout(UpdateImageSrc(imageData.data), 2000);
-  window.setInterval(UpdateImageSrc,ImageSwapFrequency, imageData.data)
+  window.setTimeout(function() {
+    UpdateImageSrc(imageData.data); }, 1000);
+  window.setInterval(UpdateImageSrc, ImageSwapFrequency, imageData.data)
   FullscreenImage();
   $(window).resize(FullscreenImage);
 }
