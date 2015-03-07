@@ -42,12 +42,14 @@ function LoadImages(imageData, recursionDepth) {
 
         if(recursionDepth > 0) {
           recursionDepth--;
+          console.log("setting minTagId to response : " + response.pagination.min_tag_id)
           imageData.minTagId = response.pagination.min_tag_id;
 
           //poll but not too quickly
           window.setTimeout(LoadImages(imageData, recursionDepth), 200);
         }
         else {
+          console.log("finished recursing. nulling minTagId")
           //end of recursion, reset maxTagId
           imageData.minTagId = null;
         }
