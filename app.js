@@ -20,13 +20,13 @@ function LoadImages(imageData, recursionDepth) {
   var searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
 
   $.getJSON(searchuri,
-    { count : "25", minTagId : imageData.data.watermark },
+    { count : "25", minTagId : imageData.watermark },
     function(response) {
         for(var i = 0; i < response.data.length; i++) {
           imageData.workingwatermark = response.data[i].id;
           if(response.data[i].images.standard_resolution.url){
-                imageData.data.minTagId = imageData.workingwatermark;
-                imageData.data.imageUris.push(response.data[i].images.standard_resolution.url);
+                imageData.minTagId = imageData.workingwatermark;
+                imageData.imageUris.push(response.data[i].images.standard_resolution.url);
           }
         }
 
