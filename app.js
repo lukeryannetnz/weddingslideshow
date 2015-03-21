@@ -1,5 +1,5 @@
 // this code was hacked together to get a prototype working. should be re-written with a framework. or at least split into separate files!
-var DataPollFrequency = 120000;
+var DataPollFrequency = 90000;
 var ImageSwapFrequency = 30000;
 
 function ImageData()
