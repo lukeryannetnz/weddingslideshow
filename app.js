@@ -22,8 +22,8 @@ function ImageData()
     $.getJSON(searchuri,
       function(response) {
           for(var i = 0; i < response.data.length; i++) {
-            if(response.data[i].images.standard_resolution.url &&
-              !lookup(that.imageUris, "uri", response.data[i].images.standard_resolution.url){
+            if(response.data[i].images.standard_resolution.url
+              && !lookup(that.imageUris, "uri", response.data[i].images.standard_resolution.url)){
                   that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : new Date()});
             }
             else{
