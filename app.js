@@ -9,13 +9,13 @@ function ImageData()
 
   this.LoadImages = function(tag, recursionDepth, waterMark) {
     var searchuri;
-
+    var dateNow = new Date();
     if(waterMark){
-      console.log('recursing: ' + recursionDepth + ".")
+      console.log('recursing: ' + recursionDepth + ". " + dateNow)
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
 
       } else {
-      console.log('polling.')
+      console.log('polling.' + dateNow)
       searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
     }
 
@@ -24,7 +24,7 @@ function ImageData()
           for(var i = 0; i < response.data.length; i++) {
             if(response.data[i].images.standard_resolution.url
               && !lookup(that.imageUris, "uri", response.data[i].images.standard_resolution.url)){
-                  that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : new Date()});
+                  that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : dateNow});
             }
             else{
               recursionDepth = 0;
