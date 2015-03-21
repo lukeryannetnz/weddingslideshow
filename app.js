@@ -104,11 +104,13 @@ function UpdateImageSrc(imageData){
     if(lastImage && lastImage.dateLoaded > lastSwapDate){
       // if there is a new image since the last time we swapped, use that
       newImageUri = lastImage.uri;
+      console.log("preferring new image " + newImageUri)
     }
     else{
       // get a random image
       var index = getRandomInt(0, imageData.imageUris.length - 1);
       newImageUri = imageData.imageUris[index].uri;
+      console.log("displaying random image " + newImageUri)
     }
 
     $("#photo").attr("src",newImageUri);
