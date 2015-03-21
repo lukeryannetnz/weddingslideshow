@@ -90,9 +90,9 @@ function UpdateImageSrc(imageData){
   if(imageData.imageUris && imageData.imageUris.length > 0){
     var newImageUri = "";
 
-    var lastImage = imageData.imageUris[imageData.imageUris.length]
+    var lastImage = imageData.imageUris[imageData.imageUris.length -1]
     var lastSwapDate = new Date(new Date().getTime() - ImageSwapFrequency);
-    if(lastImage.dateLoaded > lastSwapDate){
+    if(lastImage && lastImage.dateLoaded > lastSwapDate){
       // if there is a new image, use that
       newImageUri = lastImage.Uri;
     }
