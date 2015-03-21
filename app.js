@@ -23,7 +23,7 @@ function ImageData()
       function(response) {
           for(var i = 0; i < response.data.length; i++) {
             if(response.data[i].images.standard_resolution.url &&
-              $.inArray(response.data[i].images.standard_resolution.url, that.imageUris) < 0){
+              !lookup(that.imageUris, "uri", response.data[i].images.standard_resolution.url){
                   that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : new Date()});
             }
             else{
@@ -39,6 +39,15 @@ function ImageData()
           }
       })
   }
+}
+
+// looks for a value as a property of an object in an array
+function lookup(array, prop, value) {
+    for (var i = 0; i < array.length; i++){
+        if (array[i][prop] === value) {
+          return array[i];
+        }
+    }
 }
 
 //dirty global scope for now
