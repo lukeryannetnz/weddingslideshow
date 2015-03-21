@@ -100,8 +100,8 @@ function UpdateImageSrc(imageData){
     var newImageUri = "";
 
     var lastImage = imageData.imageUris[imageData.imageUris.length -1]
-    var lastSwapDate = new Date(new Date().getTime() - ImageSwapFrequency + 1000);
-    if(lastImage && lastImage.dateLoaded > lastSwapDate){
+    var lastSwapDate = new Date(new Date().getTime() - ImageSwapFrequency + 10000);
+    if(lastImage && lastImage.dateLoaded >= lastSwapDate){
       // if there is a new image since the last time we swapped, use that
       newImageUri = lastImage.uri;
       console.log("preferring new image " + newImageUri)
