@@ -24,7 +24,7 @@ function ImageData()
           for(var i = 0; i < response.data.length; i++) {
             if(response.data[i].images.standard_resolution.url &&
               $.inArray(response.data[i].images.standard_resolution.url, that.imageUris) < 0){
-                  that.imageUris.push(response.data[i].images.standard_resolution.url);
+                  that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : newDate()});
             }
             else{
               recursionDepth = 0;
@@ -88,8 +88,21 @@ function getRandomInt(min, max) {
 
 function UpdateImageSrc(imageData){
   if(imageData.imageUris && imageData.imageUris.length > 0){
-    var index = getRandomInt(0, imageData.imageUris.length - 1);
-    $("#photo").attr("src",imageData.imageUris[index]);
+    var newImageUri = "";
+
+    var lastImage = imageData.imageUris[imageData.imageUris.length]
+    var lastSwapDate = new Date(new Date().getTime() - ImageSwapFrequency);
+    if(lastImage.dateLoaded > lastSwapDate){
+      // if there is a new image, use that
+      newImageUri = lastImage.Uri;
+    }
+    else{
+      // get a random image
+      var index = getRandomInt(0, imageData.imageUris.length - 1);
+      newImageUri = imageData.imageUris[index].Uri;
+    }
+
+    $("#photo").attr("src",newImageUri);
   }
 }
 
