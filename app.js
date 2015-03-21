@@ -24,7 +24,7 @@ function ImageData()
           for(var i = 0; i < response.data.length; i++) {
             if(response.data[i].images.standard_resolution.url &&
               $.inArray(response.data[i].images.standard_resolution.url, that.imageUris) < 0){
-                  that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : newDate()});
+                  that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : new Date()});
             }
             else{
               recursionDepth = 0;
