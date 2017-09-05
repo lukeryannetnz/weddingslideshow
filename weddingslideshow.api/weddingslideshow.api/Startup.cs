@@ -6,6 +6,8 @@ namespace weddingslideshow.api
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
+    using weddingslideshow.api.DataAccess;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -28,6 +30,9 @@ namespace weddingslideshow.api
 
             // Pull in any SDK configuration from Configuration object
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddScoped<IFlickrService, FlickrService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
