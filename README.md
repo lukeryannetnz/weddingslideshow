@@ -1,5 +1,5 @@
 # weddingslideshow
-Displays a slideshow of images for a wedding
+Javascript application that displays a fullscreen slideshow of images for a wedding.
 
 # weddingslideshow.api
 This is a netcore 1.0 app that connects to the flickr API to pull down images by hashtag.
