@@ -25,7 +25,7 @@ namespace weddingslideshow.api.Tests
             var response = await lambdaFunction.FunctionHandlerAsync(request, context);
 
             Assert.Equal(response.StatusCode, 200);
-            Assert.Equal("[\"value1\",\"value2\"]", response.Body);
+            Assert.Equal("[\"value3\",\"value4\"]", response.Body);
             Assert.True(response.Headers.ContainsKey("Content-Type"));
             Assert.Equal("application/json; charset=utf-8", response.Headers["Content-Type"]);
         }
