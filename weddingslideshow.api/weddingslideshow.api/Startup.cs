@@ -32,7 +32,7 @@ namespace weddingslideshow.api
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
 
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddScoped<IFlickrService, FlickrService>();
+            services.AddScoped<IImageService, FlickrService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

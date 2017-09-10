@@ -1,26 +1,43 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
-using weddingslideshow.api.DataAccess;
-
 namespace weddingslideshow.api.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+
+    using weddingslideshow.api.DataAccess;
+    using weddingslideshow.api.Contracts;
+
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {
-        private readonly IFlickrService service;
+        private readonly IImageService service;
 
-        public ImagesController(IFlickrService flickrService)
+        public ImagesController(IImageService imageService)
         {
-            service = flickrService;
+            service = imageService;
         }
 
-        public IEnumerable<string> Get(string hashTag)
+        public PagedImageResponse Get(string tag, string maxId)
         {
-            return new [] {"http://www.rewildthyself.com/wp-content/uploads/2015/03/poop.jpeg"};
+            var images = service.LoadImages(tag, maxId);
+
+            var imageContracts = images.Select(i => 
+            {
+                return ConvertImageMetadataToContract(i);
+            });
+
+            return new PagedImageResponse(imageContracts);
+        }
+
+        private Image ConvertImageMetadataToContract(ImageMetadata metadata)
+        {
+            return new Image
+            { 
+                Id = metadata.Id, 
+                Location = metadata.ImageLocation 
+            };
         }
     }
 }
