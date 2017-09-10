@@ -12,19 +12,19 @@ function ImageData()
 
     if(waterMark){
       console.log('recursing: ' + recursionDepth + ".")
-      searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&max_tag_id=" + waterMark + "&callback=?";
+      searchuri = "http://localhost:5000/api/images?tag=" + tag + "&maxId=" + waterMark;
 
       } else {
       console.log('polling.')
-      searchuri = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?access_token=" + accessToken + "&callback=?";
+      searchuri = "http://localhost:5000/api/images?tag=" + tag;
     }
 
     $.getJSON(searchuri,
       function(response) {
           for(var i = 0; i < response.data.length; i++) {
-            if(response.data[i].images.standard_resolution.url
-              && !lookup(that.imageUris, "uri", response.data[i].images.standard_resolution.url)){
-                  that.imageUris.push({ uri: response.data[i].images.standard_resolution.url, dateLoaded : new Date()});
+            if(response.data[i].location
+              && !lookup(that.imageUris, "uri", response.data[i].location)){
+                  that.imageUris.push({ uri: response.data[i].location, dateLoaded : new Date()});
             }
             else{
               recursionDepth = 0;
@@ -33,9 +33,9 @@ function ImageData()
 
           console.log('image count: ' + that.imageUris.length)
 
-          if(recursionDepth > 0 && response.pagination.next_max_tag_id) {
+          if(recursionDepth > 0 && response.pagination.nextMaxId) {
             recursionDepth--;
-            that.LoadImages(tag, recursionDepth, response.pagination.next_max_tag_id);
+            that.LoadImages(tag, recursionDepth, response.pagination.nextMaxId);
           }
       })
   }
@@ -62,25 +62,6 @@ function GoButtonHander(imageData){
   window.setInterval(UpdateImageSrc, ImageSwapFrequency, imageData.data)
   FullscreenImage();
   $(window).resize(FullscreenImage);
-}
-
-function RedirectToLogin(){
-  window.location = "https://instagram.com/oauth/authorize/?client_id=834dd36a346648bdb999084cd10c3c79&redirect_uri=http://weddingslideshow.azurewebsites.net&response_type=token"
-}
-
-function TryGetAccessToken(){
-  var token;
-
-  if(location.hash){
-    token = location.hash.split('=')[1];
-    location.hash = '';
-  }
-
-  return token;
-}
-
-function ShowLoginButton(){
-  $("#login").removeClass("hidden");
 }
 
 function ShowSearchBox(){
@@ -150,17 +131,7 @@ function FullscreenImage(){
 }
 
 $(document).ready(function(){
-  $("#login").click(RedirectToLogin);
-
-  accessToken = TryGetAccessToken();
-  if(!accessToken)
-  {
-    ShowLoginButton();
-  }
-  else
-  {
-    ShowSearchBox();
-  }
+  ShowSearchBox();
 
   var imageData = new ImageData();
   $("#go").click(imageData, GoButtonHander);
