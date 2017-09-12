@@ -4,6 +4,8 @@ namespace weddingslideshow.api.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Net.Http;
+    using System.Net.Http.Headers;
     using Microsoft.AspNetCore.Mvc;
 
     using weddingslideshow.api.DataAccess;
@@ -19,9 +21,9 @@ namespace weddingslideshow.api.Controllers
             service = imageService;
         }
 
-        public PagedImageResponse Get(string tag, string maxId)
+        public async Task<PagedImageResponse> Get(string tag, string maxId)
         {
-            var images = service.LoadImages(tag, maxId);
+            var images = await service.LoadImages(tag, maxId);
 
             var imageContracts = images.Select(i => 
             {

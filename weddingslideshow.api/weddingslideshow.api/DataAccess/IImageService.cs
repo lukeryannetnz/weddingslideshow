@@ -2,6 +2,7 @@ namespace weddingslideshow.api.DataAccess
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.Extensions.Configuration;
     
     using weddingslideshow.api.DataAccess;
@@ -12,6 +13,6 @@ namespace weddingslideshow.api.DataAccess
     /// </summary>
     public interface IImageService
     {
-        IEnumerable<ImageMetadata> LoadImages(string query, string fromId);
+        Task<IEnumerable<ImageMetadata>> LoadImages(string query, string fromId);
     }
 }
