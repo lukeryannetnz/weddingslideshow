@@ -2,6 +2,7 @@ namespace weddingslideshow.api.Tests
 {
     using System.IO;
     using System.Threading.Tasks;
+    using System.Linq;
 
     using Amazon.Lambda.APIGatewayEvents;
     using Amazon.Lambda.TestUtilities;
@@ -57,7 +58,7 @@ namespace weddingslideshow.api.Tests
 
             Assert.NotNull(responseBody);
             Assert.NotNull(responseBody.Data);
-            Assert.Equal("1", responseBody.Data[0].Id)
+            Assert.Equal("1", responseBody.Data.ElementAt(0).Id);
         }
     }
 }
