@@ -37,7 +37,6 @@ namespace weddingslideshow.api.DataAccess
 
             var client = new HttpClient();
             var stringTask = client.GetStringAsync(searchUri);
-
             var json = await stringTask;
 
             return JsonConvert.DeserializeObject<ImageSearchResult>(json);
