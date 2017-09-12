@@ -56,9 +56,10 @@ var accessToken;
 function GoButtonHander(imageData){
   var tag = $("#hashtag").val();
 
+  ShowLoading();
   imageData.data.LoadImages(tag, 50);
   window.setInterval(imageData.data.LoadImages, DataPollFrequency, tag, 10)
-  window.setTimeout(UpdateImageSrc, 1100, imageData.data);
+  window.setTimeout(UpdateImageSrc, 3000, imageData.data);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency, imageData.data)
   FullscreenImage();
   $(window).resize(FullscreenImage);
@@ -70,6 +71,14 @@ function ShowSearchBox(){
 
 function HideSearchBox(){
   $("#search").addClass("hidden");
+}
+
+function ShowLoading(){
+  $("#loading").removeClass("hidden");
+}
+
+function HideLoading(){
+  $("#loading").addClass("hidden");
 }
 
 function getRandomInt(min, max) {
@@ -94,6 +103,7 @@ function UpdateImageSrc(imageData){
       console.log("displaying random image " + newImageUri)
     }
 
+    HideLoading();
     $("#photo").attr("src",newImageUri);
   }
 }
