@@ -38,6 +38,14 @@ namespace weddingslideshow.api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // Shows UseCors with CorsPolicyBuilder.
+            app.UseCors(builder =>
+                //builder.WithOrigins("http://example.com")
+                builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+            );
+
             loggerFactory.AddLambdaLogger(Configuration.GetLambdaLoggerOptions());
             app.UseMvc();
         }
