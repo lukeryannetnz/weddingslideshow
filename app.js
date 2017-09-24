@@ -12,11 +12,11 @@ function ImageData()
 
     if(waterMark){
       console.log('recursing: ' + recursionDepth + ".")
-      searchuri = "http://localhost:5000/api/images?tag=" + tag + "&maxId=" + waterMark;
+      searchuri = "https://po95505w7k.execute-api.us-west-2.amazonaws.com/Prod/api/images?tag=" + tag + "&maxId=" + waterMark;
 
       } else {
       console.log('polling.')
-      searchuri = "http://localhost:5000/api/images?tag=" + tag;
+      searchuri = "https://po95505w7k.execute-api.us-west-2.amazonaws.com/Prod/api/images?tag=" + tag;
     }
 
     $.getJSON(searchuri,
@@ -124,8 +124,7 @@ function FullscreenImage(){
   }
 
   //now resize the image relative to the ratio
-  $img.attr('width', imageWidth * ratio)
-  .attr('height', imageHeight * ratio);
+  $img.attr('height', imageHeight * ratio);
 
   //and center the image vertically and horizontally
   $img.css({
