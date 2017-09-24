@@ -109,23 +109,7 @@ function UpdateImageSrc(imageData){
 }
 
 function FullscreenImage(){
-  var $img = $('#photo'),
-  imageWidth = $img[0].width, //need the raw width due to a jquery bug that affects chrome
-  imageHeight = $img[0].height, //need the raw height due to a jquery bug that affects chrome
-  maxWidth = $(window).width(),
-  maxHeight = $(window).height(),
-  widthRatio = maxWidth / imageWidth,
-  heightRatio = maxHeight / imageHeight;
-
-  var ratio = widthRatio; //default to the width ratio until proven wrong
-
-  if (widthRatio * imageHeight > maxHeight) {
-    ratio = heightRatio;
-  }
-
-  //now resize the image relative to the ratio
-  $img.attr('height', imageHeight * ratio);
-
+  var $img = $('#photo');
   //and center the image vertically and horizontally
   $img.css({
     margin: 'auto',
@@ -133,7 +117,9 @@ function FullscreenImage(){
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    "max-width": "100%" ,
+    "max-height": "100%"
   });
 
   HideSearchBox();
