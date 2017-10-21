@@ -3,7 +3,7 @@ Displays a fullscreen slideshow of images for a wedding.
 
 If you'd like to use this you'll need to register with the Flickr API, set it up and instruct guests at your wedding to use the flickr app with an agreed hashtag. 
 
-[Contributions](CONTRIBUTIONS.md) welcome. If you want some help reach out via issues.
+[Contributions](CONTRIBUTING.md) welcome. If you want some help reach out via issues.
 
 ## app.js
 A vanilla javascript/html application that I deploy to S3 websites fronted by cloudfront. 
