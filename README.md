@@ -9,10 +9,12 @@ If you'd like to use this you'll need to register with the Flickr API, set it up
 A vanilla javascript/html application that I deploy to S3 websites fronted by cloudfront. 
 
 [2015] Initially this used the Instagram API directly. In 2015 Instagram removed searching for images by hashtag so this stopped working. 
+
 [2017] For a friends wedding an API was introduced to call the Flickr API to search by hashtag.   
 
 ## weddingslideshow.api
 This is a netcore 1.0 app that connects to the flickr API to pull down images by hashtag. It is deployed to AWS Lambda and fronted by API gateway.
+
 [2017] Api introduced
 
 ## Local development 
