@@ -5,9 +5,9 @@ If you'd like to use this you'll need to register with the Flickr API, set it up
 
 [Contributions](CONTRIBUTIONS.md) welcome. If you want some help reach out via issues.
 
-## Overview
-A raw javascript application that I deploy to S3 websites fronted by cloudfront. 
 ## app.js
+A vanilla javascript/html application that I deploy to S3 websites fronted by cloudfront. 
+
 [2015] Initially this used the Instagram API directly. In 2015 Instagram removed searching for images by hashtag so this stopped working. 
 [2017] For a friends wedding an API was introduced to call the Flickr API to search by hashtag.   
 
