@@ -8,11 +8,16 @@ namespace weddingslideshow.api.DataAccess
     using weddingslideshow.api.DataAccess;
 
     /// <summary> 
-    /// Communicates with the Flickr API.
-    /// <seealso href="https://www.flickr.com/services/api/">The Flicker API documentation.</seealso>
+    /// Loads images from a server.
     /// </summary>
     public interface IImageService
     {
         Task<IEnumerable<ImageMetadata>> LoadImages(string query, string fromId);
+
+
+        Task<IEnumerable<ImageMetadata>> LoadImages(string query, int page);
+
+
+        Task<IEnumerable<ImageMetadata>> LoadImages(string query);
     }
 }

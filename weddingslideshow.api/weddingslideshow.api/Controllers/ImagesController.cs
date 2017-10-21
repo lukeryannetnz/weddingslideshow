@@ -21,24 +21,42 @@ namespace weddingslideshow.api.Controllers
             service = imageService;
         }
 
-        public async Task<PagedImageResponse> Get(string tag, string maxId)
+        public async Task<IActionResult> Get(string tag, string maxId, int? page)
         {
-            var images = await service.LoadImages(tag, maxId);
+            if (!string.IsNullOrWhiteSpace(maxId) && page.HasValue)
+            {
+                return StatusCode(400, "Either maxId or page can be specified, not both.");
+            }
 
-            var imageContracts = images.Select(i => 
+            IEnumerable<ImageMetadata> images;
+
+            if (!string.IsNullOrWhiteSpace(maxId))
+            {
+                images = await service.LoadImages(tag, maxId);
+            }
+            else if (page.HasValue)
+            {
+                images = await service.LoadImages(tag, page.Value);
+            }
+            else
+            {
+                images = await service.LoadImages(tag);
+            }
+
+            var imageContracts = images.Select(i =>
             {
                 return ConvertImageMetadataToContract(i);
             });
 
-            return new PagedImageResponse(imageContracts);
+            return new ObjectResult(new PagedImageResponse(imageContracts));
         }
 
         private Image ConvertImageMetadataToContract(ImageMetadata metadata)
         {
             return new Image
-            { 
-                Id = metadata.Id, 
-                Location = metadata.ImageLocation 
+            {
+                Id = metadata.Id,
+                Location = metadata.ImageLocation
             };
         }
     }

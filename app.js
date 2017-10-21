@@ -12,11 +12,12 @@ function ImageData()
 
     if(waterMark){
       console.log('recursing: ' + recursionDepth + ".")
-      searchuri = "https://po95505w7k.execute-api.us-west-2.amazonaws.com/Prod/api/images?tag=" + tag + "&maxId=" + waterMark;
-
+      searchuri = "https://po95505w7k.execute-api.us-west-2.amazonaws.com/Prod/api/images?tag=" + tag + "&page=" + recursionDepth;
+      console.log(searchuri)
       } else {
       console.log('polling.')
       searchuri = "https://po95505w7k.execute-api.us-west-2.amazonaws.com/Prod/api/images?tag=" + tag;
+      console.log(searchuri)
     }
 
     $.getJSON(searchuri,
@@ -33,7 +34,7 @@ function ImageData()
 
           console.log('image count: ' + that.imageUris.length)
 
-          if(recursionDepth > 0 && response.pagination.nextMaxId) {
+          if(recursionDepth > 1) {
             recursionDepth--;
             that.LoadImages(tag, recursionDepth, response.pagination.nextMaxId);
           }

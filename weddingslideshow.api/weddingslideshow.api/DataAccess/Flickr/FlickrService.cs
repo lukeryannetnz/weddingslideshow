@@ -11,6 +11,10 @@ namespace weddingslideshow.api.DataAccess
 
     using weddingslideshow.api.DataAccess;
 
+    /// <summary> 
+    /// Communicates with the Flickr API.
+    /// <seealso href="https://www.flickr.com/services/api/">The Flicker API documentation.</seealso>
+    /// </summary>
     public class FlickrService : IImageService
     {
         private readonly string apiKey;
@@ -26,15 +30,37 @@ namespace weddingslideshow.api.DataAccess
 
         public async Task<IEnumerable<ImageMetadata>> LoadImages(string query, string fromId)
         {
-            var result = await LoadImagesFromApi(query);
+            throw new Exception("Paging images via watermark is not supported by the Flickr API.");
+        }
+
+        public async Task<IEnumerable<ImageMetadata>> LoadImages(string query, int page)
+        {
+            var uri = CreateUri(query, page);
+            var result = await LoadImagesFromApi(uri);
 
             return ConvertApiResponse(result);
         }
 
-        private async Task<ImageSearchResult> LoadImagesFromApi(string tag)
+        public async Task<IEnumerable<ImageMetadata>> LoadImages(string query)
         {
-            var searchUri = $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&format=json&nojsoncallback=1&per_page=20";
+            var uri = CreateUri(query);
+            var result = await LoadImagesFromApi(uri);
 
+            return ConvertApiResponse(result);
+        }
+
+        private string CreateUri(string tag)
+        {
+            return $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&per_page=20&format=json&nojsoncallback=1";
+        }
+
+        private string CreateUri(string tag, int page)
+        {
+            return $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&per_page=20&page={page}&format=json&nojsoncallback=1";
+        }
+
+        private async Task<ImageSearchResult> LoadImagesFromApi(string searchUri)
+        {
             var client = new HttpClient();
             var stringTask = client.GetStringAsync(searchUri);
             var json = await stringTask;
@@ -44,14 +70,14 @@ namespace weddingslideshow.api.DataAccess
 
         private IEnumerable<ImageMetadata> ConvertApiResponse(ImageSearchResult result)
         {
-            foreach(var p in result.photos.photo)
+            foreach (var p in result.photos.photo)
             {
-                if(Uri.IsWellFormedUriString(p.url_o, UriKind.Absolute))
+                if (Uri.IsWellFormedUriString(p.url_o, UriKind.Absolute))
                 {
                     yield return new ImageMetadata()
-                    { 
-                        Id = p.id, 
-                        ImageLocation = new Uri(p.url_o) 
+                    {
+                        Id = p.id,
+                        ImageLocation = new Uri(p.url_o)
                     };
                 }
             }
