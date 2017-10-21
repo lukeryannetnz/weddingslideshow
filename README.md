@@ -13,6 +13,7 @@ Run these commands inside the ~/weddingslideshow.api directory
 ### API publish via AWS SAM to cloudformation, api gateway, S3 and lambda
 Run these commands inside the ~/weddingslideshow.api/weddingslideshow.api directory
 * `dotnet lambda deploy-serverless` - publishes the infrastructure to AWS with cloudformation. Requires IAM credentials in a profile named lukeryannetnz.
-Run these commands inside the root directory
+
 ### Front end publish to S3
+Run these commands inside the root directory
 * `aws s3 cp . s3://[BUCKETNAME] --recursive --exclude "*/**.*" --exclude ".git/*" --exclude ".DS_Store" --exclude ".gitignore" --exclude ".gitattributes"` - publishes the front end to an S3 bucket. Requires IAM credentials in the default profile.
