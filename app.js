@@ -27,9 +27,6 @@ function ImageData()
               && !lookup(that.imageUris, "uri", response.data[i].location)){
                   that.imageUris.push({ uri: response.data[i].location, dateLoaded : new Date()});
             }
-            else{
-              recursionDepth = 0;
-            }
           }
 
           console.log('image count: ' + that.imageUris.length)
@@ -58,7 +55,7 @@ function GoButtonHander(imageData){
   var tag = $("#hashtag").val();
 
   ShowLoading();
-  imageData.data.LoadImages(tag, 50);
+  imageData.data.LoadImages(tag, 15);
   window.setInterval(imageData.data.LoadImages, DataPollFrequency, tag, 10)
   window.setTimeout(UpdateImageSrc, 3000, imageData.data);
   window.setInterval(UpdateImageSrc, ImageSwapFrequency, imageData.data)
