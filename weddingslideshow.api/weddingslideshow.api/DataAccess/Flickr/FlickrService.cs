@@ -51,12 +51,12 @@ namespace weddingslideshow.api.DataAccess
 
         private string CreateUri(string tag)
         {
-            return $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&per_page=20&format=json&nojsoncallback=1";
+            return $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&per_page=100&format=json&nojsoncallback=1";
         }
 
         private string CreateUri(string tag, int page)
         {
-            return $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&per_page=20&page={page}&format=json&nojsoncallback=1";
+            return $"{apiUri}?method=flickr.photos.search&api_key={apiKey}&tags={tag}&extras=url_o&per_page=100&page={page}&format=json&nojsoncallback=1";
         }
 
         private async Task<ImageSearchResult> LoadImagesFromApi(string searchUri)
