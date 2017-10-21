@@ -28,7 +28,7 @@ namespace weddingslideshow.api.DataAccess
             apiUri = new Uri(config["FlickrAPI:Uri"]);
         }
 
-        public async Task<IEnumerable<ImageMetadata>> LoadImages(string query, string fromId)
+        public Task<IEnumerable<ImageMetadata>> LoadImages(string query, string fromId)
         {
             throw new Exception("Paging images via watermark is not supported by the Flickr API.");
         }

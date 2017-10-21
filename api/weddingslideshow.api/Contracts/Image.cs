@@ -7,7 +7,7 @@ namespace weddingslideshow.api.Contracts
     /// </summary>
     public class Image
     {
-        public string Id{get;set;}
+        public string Id {get;set;}
 
         public Uri Location {get; set;}
   }

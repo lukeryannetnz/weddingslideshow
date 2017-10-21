@@ -4,7 +4,7 @@ namespace weddingslideshow.api.DataAccess
 
     public class ImageMetadata
     {
-        public string Id{get;set;}
+        public string Id {get; set;}
 
         public Uri ImageLocation {get; set;}
     }
