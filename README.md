@@ -1,10 +1,22 @@
 # weddingslideshow
-Javascript application that displays a fullscreen slideshow of images for a wedding.
+Displays a fullscreen slideshow of images for a wedding.
 
-# weddingslideshow.api
-This is a netcore 1.0 app that connects to the flickr API to pull down images by hashtag.
+If you'd like to use this you'll need to register with the Flickr API, set it up and instruct guests at your wedding to use the flickr app with an agreed hashtag. 
 
-## Local development commands
+[Contributions](CONTRIBUTIONS.md) welcome. If you want some help reach out via issues.
+
+## Overview
+A raw javascript application that I deploy to S3 websites fronted by cloudfront. 
+## app.js
+[2015] Initially this used the Instagram API directly. In 2015 Instagram removed searching for images by hashtag so this stopped working. 
+[2017] For a friends wedding an API was introduced to call the Flickr API to search by hashtag.   
+
+## weddingslideshow.api
+This is a netcore 1.0 app that connects to the flickr API to pull down images by hashtag. It is deployed to AWS Lambda and fronted by API gateway.
+[2017] Api introduced
+
+## Local development 
+### Local development commands
 Run these commands inside the /api directory
 * `dotnet build` - compiles the solution
 * `dotnet test` - runs the tests
