@@ -26,13 +26,13 @@ Run these commands inside the /api directory
 ## Configuration
 You'll need to configure the API in order to run it. 
 Create two files for local vs production configuration:
-/api/weddingslideshow.api/appsettings.Development.json
-/api/weddingslideshow.api/appsettings.Production.json
+`/api/weddingslideshow.api/appsettings.Development.json`
+`/api/weddingslideshow.api/appsettings.Production.json`
 
 ### Configuration structure
 Each file should contain a JSON object similar to the following:
 `{
-  "AWS": {
+  "AWS": { 
     "Region": "us-west-2"
   },
   "FlickrAPI": {
