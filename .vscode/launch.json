@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceRoot}/weddingslideshow.api/weddingslideshow.api/bin/Debug/netcoreapp1.0/weddingslideshow.api.dll",
+            "program": "${workspaceRoot}/api/weddingslideshow.api/bin/Debug/netcoreapp1.0/weddingslideshow.api.dll",
             "args": [],
-            "cwd": "${workspaceRoot}/weddingslideshow.api/weddingslideshow.api",
+            "cwd": "${workspaceRoot}/api/weddingslideshow.api",
             "stopAtEntry": false,
             "internalConsoleOptions": "openOnSessionStart",
             "launchBrowser": {

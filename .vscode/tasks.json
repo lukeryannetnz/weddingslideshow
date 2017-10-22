@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/weddingslideshow.api/weddingslideshow.api.sln"
+                "${workspaceRoot}/api/weddingslideshow.api.sln"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
