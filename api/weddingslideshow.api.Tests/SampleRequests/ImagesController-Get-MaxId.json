@@ -4,7 +4,8 @@
   "httpMethod": "GET",
   "headers": null,
   "queryStringParameters": {
-    "tag": "test"
+    "tag": "test",
+    "maxId": "someidentifier"
   },
   "pathParameters": {
     "proxy": "api/images"
