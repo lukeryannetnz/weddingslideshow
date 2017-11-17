@@ -117,7 +117,8 @@ function FullscreenImage(){
     left: 0,
     right: 0,
     "max-width": "100%" ,
-    "max-height": "100%"
+    "max-height": "100%",
+    "image-orientation": "from-image"
   });
 
   HideSearchBox();
